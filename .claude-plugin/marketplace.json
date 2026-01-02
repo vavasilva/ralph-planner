@@ -9,7 +9,7 @@
       "name": "ralph-planner",
       "version": "1.0.0",
       "description": "Create structured execution plans in Ralph Wiggum format with auto-generated loop commands",
-      "source": "https://github.com/vavasilva/ralph-planner",
+      "source": "./",
       "keywords": ["planning", "tasks", "ralph-wiggum", "loops"]
     }
   ]

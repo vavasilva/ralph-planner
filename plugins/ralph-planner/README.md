@@ -113,6 +113,35 @@ Generic promises like *"I will complete all phases systematically"* are not veri
 - **Verifiable promises** ("All tests pass" vs "I'll do my best")
 - **Consistent structure** for repeatable planning
 
+## Troubleshooting
+
+### Loop runs infinitely / "No completion promise set"
+
+If you see this message repeatedly:
+```
+🔄 Ralph iteration X | No completion promise set - loop runs infinitely
+```
+
+The ralph-wiggum plugin saves state in `.claude/ralph-loop.local.md`. If a loop wasn't properly cancelled, it persists.
+
+**Solution:**
+
+1. Cancel the active loop:
+   ```
+   /ralph-wiggum:cancel-ralph
+   ```
+
+2. Or delete the state file manually:
+   ```bash
+   rm .claude/ralph-loop.local.md
+   ```
+
+3. Start a fresh Claude session
+
+### Plan generates but loop starts automatically
+
+The `from-file` command should ONLY create the plan, not execute it. If it starts implementing automatically, there's likely an active loop from a previous session. Follow the steps above to cancel it.
+
 ## License
 
 MIT

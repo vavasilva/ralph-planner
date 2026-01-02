@@ -26,7 +26,7 @@ claude plugins:add anthropics/claude-code/plugins/ralph-wiggum
 | `/ralph-planner:refactor "<desc>"` | Code refactoring |
 | `/ralph-planner:migration "<desc>"` | Data/code migration |
 | `/ralph-planner:performance "<desc>"` | Performance optimization |
-| `/ralph-planner:from-file "<path>"` | Create plan from existing .md file |
+| `/ralph-planner:from-file "<path>" [--type] [--output]` | Create plan from existing .md file |
 | `/ralph-planner:help` | Show help documentation |
 
 ## Work Type Templates
@@ -80,7 +80,12 @@ Already have a feature spec or issue documented? Use `from-file` to generate a p
 ```
 /ralph-planner:from-file "./docs/my-feature.md"
 /ralph-planner:from-file "./issues/bug-123.md" --type bugfix
+/ralph-planner:from-file "./docs/feature.md" --output "./plans/feature-plan.md"
 ```
+
+**Options:**
+- `--type <type>`: Force a specific template (feature, bugfix, refactor, migration, performance)
+- `--output <path>`: Save the plan to a file instead of just displaying it
 
 The command reads your file, auto-detects the work type (or uses `--type`), and generates a structured plan based on the content.
 

@@ -10,6 +10,7 @@ Create a structured execution plan based on an existing markdown file.
 
 - `file_path` (required): Path to the markdown file containing the task/feature description
 - `--type` (optional): Work type template to use (feature, bugfix, refactor, migration, performance)
+- `--output` (optional): Path to save the generated plan (e.g., `./plans/my-plan.md`)
 
 ## Instructions
 
@@ -19,9 +20,12 @@ You are a planning assistant. Create a structured plan based on the content of a
 
 Read the file at the specified path: `$ARGUMENTS`
 
-Extract the file path and optional `--type` parameter:
-- If arguments contain `--type <type>`, use that template
-- If no type specified, analyze the content to determine the best template
+Extract parameters from arguments:
+- `file_path`: The path to the source file
+- `--type <type>`: (optional) Use specific template
+- `--output <path>`: (optional) Save plan to this file
+
+If no type specified, analyze the content to determine the best template.
 
 ### Step 2: Analyze Content
 
@@ -98,12 +102,23 @@ If the plan has multiple phases, generate a command for each:
 /ralph-wiggum:ralph-loop [total iterations] "[full summary]. DONE when: [all key criteria]"
 ```
 
+### Step 6: Save Plan (if --output specified)
+
+If `--output <path>` was provided:
+1. Create the directory if it doesn't exist
+2. Save the complete plan (from Step 4 + Step 5) to the specified file
+3. Confirm: "Plan saved to [path]"
+
+If no `--output`, just display the plan in the chat.
+
 ## Examples
 
 ```
 /ralph-planner:from-file "./docs/auth-feature.md"
 /ralph-planner:from-file "./issues/bug-123.md" --type bugfix
 /ralph-planner:from-file "./specs/api-migration.md" --type migration
+/ralph-planner:from-file "./docs/feature.md" --output "./plans/feature-plan.md"
+/ralph-planner:from-file ".serena/memory/tasks.md" --type feature --output "./plans/tasks-plan.md"
 ```
 
 ## Guidelines

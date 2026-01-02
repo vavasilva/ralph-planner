@@ -1,0 +1,8 @@
+{
+  "name": "ralph-planner",
+  "description": "Create structured execution plans in Ralph Wiggum format with auto-generated loop commands. Companion plugin for ralph-wiggum.",
+  "author": {
+    "name": "Wagner Silva",
+    "url": "https://github.com/vavasilva"
+  }
+}

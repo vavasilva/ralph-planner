@@ -9,17 +9,8 @@
       "name": "ralph-planner",
       "version": "1.0.0",
       "description": "Create structured execution plans in Ralph Wiggum format with auto-generated loop commands",
-      "source": "./",
-      "keywords": ["planning", "tasks", "ralph-wiggum", "loops"],
-      "commands": [
-        "./commands/bugfix.md",
-        "./commands/feature.md",
-        "./commands/help.md",
-        "./commands/migration.md",
-        "./commands/performance.md",
-        "./commands/plan-loop.md",
-        "./commands/refactor.md"
-      ]
+      "source": "./plugins/ralph-planner",
+      "keywords": ["planning", "tasks", "ralph-wiggum", "loops"]
     }
   ]
 }

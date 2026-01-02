@@ -1,15 +1,16 @@
 {
-  "name": "ralph-planner",
-  "display_name": "Ralph Planner",
-  "version": "1.0.0",
-  "description": "Create structured execution plans in Ralph Wiggum format with auto-generated loop commands",
-  "author": {
-    "name": "Wagner Silva",
-    "url": "https://github.com/vavasilva"
-  },
-  "repository": "https://github.com/vavasilva/ralph-planner",
-  "keywords": ["planning", "tasks", "ralph-wiggum", "loops"],
-  "dependencies": {
-    "plugins": ["ralph-wiggum"]
-  }
+  "owner": "vavasilva",
+  "plugins": [
+    {
+      "name": "ralph-planner",
+      "display_name": "Ralph Planner",
+      "version": "1.0.0",
+      "description": "Create structured execution plans in Ralph Wiggum format with auto-generated loop commands",
+      "repository": "https://github.com/vavasilva/ralph-planner",
+      "keywords": ["planning", "tasks", "ralph-wiggum", "loops"],
+      "dependencies": {
+        "plugins": ["ralph-wiggum"]
+      }
+    }
+  ]
 }

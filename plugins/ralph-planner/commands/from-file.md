@@ -81,25 +81,36 @@ Output format:
 
 ### Step 5: Generate Loop Command
 
-**IMPORTANT:** Always include the DONE condition with verifiable promises in the command!
+**IMPORTANT:**
+1. Always include the DONE condition with verifiable promises
+2. If `--output` was used, include the **plan file path** so ralph-loop knows where to find it
 
+**Format (with --output):**
 ```
-Ready to execute? Run:
-/ralph-wiggum:ralph-loop [estimated iterations] "[brief summary]. DONE when: [list key completion criteria from the plan]"
+/ralph-wiggum:ralph-loop [iterations] "Implement [summary] from [plan-path]. DONE when: [criteria]"
 ```
 
-Example output:
+**Format (without --output):**
 ```
-/ralph-wiggum:ralph-loop 42 "Implement auth features. DONE when: login works, tests pass, --help updated"
+/ralph-wiggum:ralph-loop [iterations] "[summary]. DONE when: [criteria]"
+```
+
+**Examples:**
+```
+# With --output (includes plan path):
+/ralph-wiggum:ralph-loop 42 "Implement auth features from ./plans/auth-plan.md. DONE when: login works, tests pass"
+
+# Without --output:
+/ralph-wiggum:ralph-loop 42 "Implement auth features. DONE when: login works, tests pass"
 ```
 
 If the plan has multiple phases, generate a command for each:
 ```
 # Phase 1 (recommended start):
-/ralph-wiggum:ralph-loop [phase1 iterations] "[phase1 summary]. DONE when: [phase1 criteria]"
+/ralph-wiggum:ralph-loop [phase1 iterations] "Implement Phase 1 from [plan-path]. DONE when: [phase1 criteria]"
 
 # All phases:
-/ralph-wiggum:ralph-loop [total iterations] "[full summary]. DONE when: [all key criteria]"
+/ralph-wiggum:ralph-loop [total iterations] "Implement all from [plan-path]. DONE when: [all key criteria]"
 ```
 
 ### Step 6: Save Plan (if --output specified)

@@ -106,10 +106,13 @@ If the plan has multiple phases, generate a command for each:
 
 If `--output <path>` was provided:
 1. Create the directory if it doesn't exist
-2. Save the complete plan (from Step 4 + Step 5) to the specified file
-3. Confirm: "Plan saved to [path]"
+2. Save **ONLY the plan from Step 4** to the file (phases, tasks, criteria, promise tag)
+3. **DO NOT save the execution commands (Step 5) to the file** — they go only in chat
+4. Confirm: "Plan saved to [path]"
 
-If no `--output`, just display the plan in the chat.
+**Why?** The execution commands are for the USER to copy/run. If saved in the plan file, ralph-loop might misinterpret them as tasks to execute.
+
+After saving, **display the execution commands in the chat** so the user can copy them.
 
 ## Examples
 

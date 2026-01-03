@@ -58,13 +58,11 @@ Output a plan with this exact structure:
 
 ### Step 3: Generate the Loop Command
 
-**IMPORTANT:** Always include DONE condition with verifiable promises from the plan!
-
-After the plan, output:
+After the plan, output the ready-to-run command:
 
 ```
 Ready to execute? Run:
-/ralph-wiggum:ralph-loop [estimated iterations] "[brief task summary]. DONE when: [list key completion criteria from the plan]"
+/ralph-wiggum:ralph-loop "[brief task summary]. DONE when: [list key completion criteria from the plan]. Output <promise>COMPLETE</promise> when done." --completion-promise "COMPLETE" --max-iterations [estimated iterations]
 ```
 
 ### Guidelines

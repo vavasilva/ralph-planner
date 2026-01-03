@@ -89,6 +89,7 @@ claude plugin install ralph-wiggum@claude-plugins-official
 | `/ralph-planner:migration "<desc>"` | Data/code migration |
 | `/ralph-planner:performance "<desc>"` | Performance optimization |
 | `/ralph-planner:from-file "<path>"` | Create plan from existing .md file |
+| `/ralph-planner:from-issue "#123"` | Create plan from GitHub issue |
 | `/ralph-planner:help` | Show help documentation |
 
 ## Work Type Templates
@@ -158,6 +159,33 @@ Already have a feature spec or issue documented? Generate a plan from it:
 **Options:**
 - `--type <type>`: Force a specific template (feature, bugfix, refactor, migration, performance)
 - `--output <path>`: Save the plan to a file instead of just displaying it
+
+### From Issue
+
+Create plans directly from GitHub issues. Labels auto-detect the work type:
+
+```
+/ralph-planner:from-issue "#42"
+/ralph-planner:from-issue "owner/repo#123"
+/ralph-planner:from-issue "#42" --type bugfix
+/ralph-planner:from-issue "#42" --output "./plans/issue-42.md"
+/ralph-planner:from-issue "#42" --include-comments
+```
+
+**Auto-detection from labels:**
+
+| GitHub Labels | Template |
+|---------------|----------|
+| `bug`, `bugfix`, `fix` | bugfix |
+| `enhancement`, `feature` | feature |
+| `refactor`, `tech-debt` | refactor |
+| `migration`, `upgrade` | migration |
+| `performance`, `perf` | performance |
+
+**Options:**
+- `--type <type>`: Force a specific template
+- `--output <path>`: Save the plan to a file
+- `--include-comments`: Include issue comments for more context
 
 ## Why Templates?
 

@@ -30,7 +30,12 @@ Specialized templates with pre-defined phases and **verifiable promises**:
 - `/ralph-planner:performance "<description>"` - Performance optimization
 
 ### From File
-- `/ralph-planner:from-file "<path>" [--type <type>]` - Create plan from existing .md file
+- `/ralph-planner:from-file "<path>" [--type <type>] [--output <path>]` - Create plan from existing .md file
+
+### From GitHub Issue
+- `/ralph-planner:from-issue "#123" [--type <type>] [--output <path>] [--include-comments]` - Create plan from GitHub issue
+- Auto-detects work type from issue labels (bug → bugfix, enhancement → feature, etc.)
+- Supports `#123` (current repo) or `owner/repo#123` (external repo)
 
 ### Help
 - `/ralph-planner:help` - Show this help message

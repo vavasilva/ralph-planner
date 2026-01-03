@@ -14,15 +14,56 @@ Ralph Wiggum loops are powerful, but they often fail because of **bad prompts**:
 
 **Ralph Planner fixes this by adding a planning layer before the loop runs.**
 
-## What It Does
+## Quick Start
 
-Given a task description, Ralph Planner:
+```
+/ralph-planner:plan-loop "Add user authentication with JWT"
+```
 
-1. Breaks it into **phases** based on work type
-2. Generates **concrete tasks** per phase
-3. Adds **completion criteria** (Definition of Done)
-4. Estimates **iterations** (`tasks × 3`)
-5. Outputs a **ready-to-run loop command** with DONE condition
+That's it. You get a structured plan + a ready-to-run loop command.
+
+## The DONE Condition (Why This Matters)
+
+The #1 reason loops run forever: **no verifiable exit criteria**.
+
+Ralph Planner generates commands with **specific DONE conditions**:
+
+```
+# Bad (runs forever)
+/ralph-wiggum:ralph-loop 30 "Implement auth"
+
+# Good (knows when to stop)
+/ralph-wiggum:ralph-loop 30 "Implement auth. DONE when: POST /login returns 200 with valid JWT, all tests pass, invalid credentials return 401"
+```
+
+Every template includes verifiable promises like:
+- `"All tests pass"` (not "tests look good")
+- `"Endpoint returns 200"` (not "endpoint works")
+- `"Bug no longer reproducible"` (not "bug seems fixed")
+
+## Installation
+
+### In-app (recommended)
+
+```
+/plugin marketplace add vavasilva/ralph-planner
+/plugin install ralph-planner@ralph-planner
+```
+
+### CLI
+
+```bash
+claude plugin marketplace add vavasilva/ralph-planner
+claude plugin install ralph-planner@ralph-planner
+```
+
+### Requirement
+
+Requires [ralph-wiggum](https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum):
+
+```
+/plugin install ralph-wiggum@claude-plugins-official
+```
 
 ## Demo
 
@@ -58,25 +99,10 @@ Estimated iterations: 30
 ### Ready-to-run command
 
 ```
-/ralph-wiggum:ralph-loop 30 "Implement JWT authentication. DONE when: feature works as specified, all new tests pass, no regressions"
+/ralph-wiggum:ralph-loop 30 "Implement JWT auth. DONE when: POST /login returns JWT, protected routes reject invalid tokens, all tests pass"
 ```
 
 **Plan → Execute → Converge**
-
-## Installation
-
-```bash
-claude plugin marketplace add vavasilva/ralph-planner
-claude plugin install ralph-planner@ralph-planner
-```
-
-### Requirement
-
-Requires [ralph-wiggum](https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum):
-
-```bash
-claude plugin install ralph-wiggum@claude-plugins-official
-```
 
 ## Commands
 
@@ -92,9 +118,9 @@ claude plugin install ralph-wiggum@claude-plugins-official
 | `/ralph-planner:from-issue "#123"` | Create plan from GitHub issue |
 | `/ralph-planner:help` | Show help documentation |
 
-## Work Type Templates
+## Specialized Templates
 
-Each template has **pre-defined phases** and **verifiable promises** optimized for the work type:
+Each template has **pre-defined phases** and **verifiable promises**:
 
 ### Feature
 
@@ -104,7 +130,7 @@ Each template has **pre-defined phases** and **verifiable promises** optimized f
 
 | Phases | Discovery → Implementation → Testing → Documentation |
 |--------|-------------------------------------------------------|
-| Promises | All new tests pass, Feature works as specified, No regressions |
+| DONE when | All new tests pass, Feature works as specified, No regressions |
 
 ### Bugfix
 
@@ -114,7 +140,7 @@ Each template has **pre-defined phases** and **verifiable promises** optimized f
 
 | Phases | Reproduction → Root Cause → Fix → Verification |
 |--------|------------------------------------------------|
-| Promises | Bug no longer reproducible, Regression test added, No new issues |
+| DONE when | Bug no longer reproducible, Regression test added, No new issues |
 
 ### Refactor
 
@@ -124,7 +150,7 @@ Each template has **pre-defined phases** and **verifiable promises** optimized f
 
 | Phases | Analysis → Preparation → Refactor → Validation |
 |--------|------------------------------------------------|
-| Promises | All existing tests pass, No behavior changes, Goals met |
+| DONE when | All existing tests pass, No behavior changes, Goals met |
 
 ### Migration
 
@@ -134,7 +160,7 @@ Each template has **pre-defined phases** and **verifiable promises** optimized f
 
 | Phases | Assessment → Preparation → Migration → Verification |
 |--------|-----------------------------------------------------|
-| Promises | All data migrated, Application functional, Rollback tested |
+| DONE when | All data migrated, Application functional, Rollback tested |
 
 ### Performance
 
@@ -144,21 +170,17 @@ Each template has **pre-defined phases** and **verifiable promises** optimized f
 
 | Phases | Baseline → Analysis → Optimization → Validation |
 |--------|--------------------------------------------------|
-| Promises | Metrics improved, No regressions, Results documented |
+| DONE when | Response time < target, No regressions, Benchmarks documented |
 
 ### From File
 
-Already have a feature spec or issue documented? Generate a plan from it:
+Already have a feature spec documented? Generate a plan from it:
 
 ```
 /ralph-planner:from-file "./docs/my-feature.md"
 /ralph-planner:from-file "./issues/bug-123.md" --type bugfix
 /ralph-planner:from-file "./docs/feature.md" --output "./plans/feature-plan.md"
 ```
-
-**Options:**
-- `--type <type>`: Force a specific template (feature, bugfix, refactor, migration, performance)
-- `--output <path>`: Save the plan to a file instead of just displaying it
 
 ### From Issue
 
@@ -167,8 +189,6 @@ Create plans directly from GitHub issues. Labels auto-detect the work type:
 ```
 /ralph-planner:from-issue "#42"
 /ralph-planner:from-issue "owner/repo#123"
-/ralph-planner:from-issue "#42" --type bugfix
-/ralph-planner:from-issue "#42" --output "./plans/issue-42.md"
 /ralph-planner:from-issue "#42" --include-comments
 ```
 
@@ -182,11 +202,6 @@ Create plans directly from GitHub issues. Labels auto-detect the work type:
 | `migration`, `upgrade` | migration |
 | `performance`, `perf` | performance |
 
-**Options:**
-- `--type <type>`: Force a specific template
-- `--output <path>`: Save the plan to a file
-- `--include-comments`: Include issue comments for more context
-
 ## Why Templates?
 
 Generic promises like *"I will complete all phases systematically"* are **not verifiable**.
@@ -194,8 +209,8 @@ Generic promises like *"I will complete all phases systematically"* are **not ve
 Templates provide:
 
 - **Specific phases** for each work type
-- **Verifiable promises** ("All tests pass" vs "I'll do my best")
-- **DONE conditions** that tell the loop when to stop
+- **Verifiable DONE conditions** ("All tests pass" vs "I'll do my best")
+- **Exit criteria** that tell the loop when to stop
 
 ## How It Fits the Ralph Ecosystem
 
@@ -206,13 +221,6 @@ Templates provide:
 | You | Decide when to run |
 
 Ralph Planner does **not** compete with ralph-wiggum — it **makes it better**.
-
-## Roadmap
-
-- [ ] Configurable iteration multiplier (`--multiplier`)
-- [ ] Risk & dependency section in plans
-- [ ] Machine-readable plan format (YAML/JSON)
-- [ ] Custom template creation
 
 ## Running Unattended Loops
 
@@ -232,6 +240,13 @@ claude --dangerously-skip-permissions
 1. Generate plan with ralph-planner (review it carefully)
 2. Start Claude with `--dangerously-skip-permissions`
 3. Run the ralph-loop command
+
+## Roadmap
+
+- [ ] Configurable iteration multiplier (`--multiplier`) [#2](https://github.com/vavasilva/ralph-planner/issues/2)
+- [ ] Risk & dependency section in plans [#3](https://github.com/vavasilva/ralph-planner/issues/3)
+- [ ] Machine-readable plan format (YAML/JSON) [#4](https://github.com/vavasilva/ralph-planner/issues/4)
+- [ ] Custom template creation [#5](https://github.com/vavasilva/ralph-planner/issues/5)
 
 ## Troubleshooting
 

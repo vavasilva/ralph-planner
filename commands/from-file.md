@@ -84,36 +84,25 @@ Output format:
 
 ### Step 5: Generate Loop Command
 
-**IMPORTANT:**
-1. Always include the DONE condition with verifiable promises
-2. If `--output` was used, include the **plan file path** so ralph-loop knows where to find it
+After the plan, output the ready-to-run command using the correct ralph-wiggum format:
 
 **Format (with --output):**
 ```
-/ralph-wiggum:ralph-loop [iterations] "Implement [summary] from [plan-path]. DONE when: [criteria]"
+/ralph-wiggum:ralph-loop "Implement [summary] from [plan-path]. DONE when: [criteria]. Output <promise>COMPLETE</promise> when done." --completion-promise "COMPLETE" --max-iterations [iterations]
 ```
 
 **Format (without --output):**
 ```
-/ralph-wiggum:ralph-loop [iterations] "[summary]. DONE when: [criteria]"
+/ralph-wiggum:ralph-loop "[summary]. DONE when: [criteria]. Output <promise>COMPLETE</promise> when done." --completion-promise "COMPLETE" --max-iterations [iterations]
 ```
 
 **Examples:**
 ```
 # With --output (includes plan path):
-/ralph-wiggum:ralph-loop 42 "Implement auth features from ./plans/auth-plan.md. DONE when: login works, tests pass"
+/ralph-wiggum:ralph-loop "Implement auth features from ./plans/auth-plan.md. DONE when: login works, tests pass. Output <promise>COMPLETE</promise> when done." --completion-promise "COMPLETE" --max-iterations 42
 
 # Without --output:
-/ralph-wiggum:ralph-loop 42 "Implement auth features. DONE when: login works, tests pass"
-```
-
-If the plan has multiple phases, generate a command for each:
-```
-# Phase 1 (recommended start):
-/ralph-wiggum:ralph-loop [phase1 iterations] "Implement Phase 1 from [plan-path]. DONE when: [phase1 criteria]"
-
-# All phases:
-/ralph-wiggum:ralph-loop [total iterations] "Implement all from [plan-path]. DONE when: [all key criteria]"
+/ralph-wiggum:ralph-loop "Implement auth features. DONE when: login works, tests pass. Output <promise>COMPLETE</promise> when done." --completion-promise "COMPLETE" --max-iterations 42
 ```
 
 ### Step 6: Save Plan (if --output specified)

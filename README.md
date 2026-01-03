@@ -214,6 +214,25 @@ Ralph Planner does **not** compete with ralph-wiggum — it **makes it better**.
 - [ ] Machine-readable plan format (YAML/JSON)
 - [ ] Custom template creation
 
+## Running Unattended Loops
+
+For long-running loops without permission prompts:
+
+```bash
+claude --dangerously-skip-permissions
+```
+
+> **Warning:** This skips ALL permission checks. Only use in:
+> - Isolated/sandboxed environments
+> - Projects where you trust the plan completely
+> - When you've reviewed the generated plan first
+
+**Recommended workflow:**
+
+1. Generate plan with ralph-planner (review it carefully)
+2. Start Claude with `--dangerously-skip-permissions`
+3. Run the ralph-loop command
+
 ## Troubleshooting
 
 ### Loop runs infinitely / "No completion promise set"

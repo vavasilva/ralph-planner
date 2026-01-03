@@ -75,11 +75,11 @@ Generate a plan with these specific phases:
 
 ### Generate Loop Command
 
-**IMPORTANT:** Always include DONE condition with verifiable promises!
+After the plan, output the ready-to-run command:
 
 ```
 Ready to execute? Run:
-/ralph-wiggum:ralph-loop [estimated iterations] "Migrate: [subject]. DONE when: all items migrated, application functional, data integrity verified, rollback tested"
+/ralph-wiggum:ralph-loop "Migrate: [subject]. DONE when: all items migrated, application functional, data integrity verified, rollback tested. Output <promise>COMPLETE</promise> when done." --completion-promise "COMPLETE" --max-iterations [estimated iterations]
 ```
 
 ### Guidelines
